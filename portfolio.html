@@ -1,0 +1,758 @@
+<html lang="pt" class="dark"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio - AGB - Soluções de Software à Medida</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+--font-inter: 'Inter', sans-serif;
+--font-geist: 'Geist Mono', monospace;
+}
+body {
+font-family: var(--font-inter);
+background-color: #000000;
+color: #ffffff;
+overflow-x: hidden;
+}
+.font-geist-mono {
+font-family: var(--font-geist) !important;
+}
+/* 1. Viewport Animation Utils */
+.reveal-on-scroll {
+opacity: 0;
+filter: blur(10px);
+transform: translateY(20px);
+transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+will-change: transform, opacity, filter;
+}
+.reveal-on-scroll.is-visible {
+opacity: 1;
+filter: blur(0);
+transform: translateY(0);
+}
+/* 2. Background Column Clip Animation */
+.bg-column {
+transform-origin: top;
+animation: col-reveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes col-reveal {
+0% {
+transform: scaleY(0);
+}
+100% {
+transform: scaleY(1);
+}
+}
+/* 3. Border Beam Animation */
+@keyframes border-beam {
+100% {
+offset-distance: 100%;
+}
+}
+.border-beam-btn {
+position: relative;
+overflow: hidden;
+}
+.border-beam-btn::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+border-radius: 9999px;
+padding: 1px;
+background: conic-gradient(from 90deg at 50% 50%, #0000 0%, #0000 50%, #fff 100%);
+-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor;
+mask-composite: exclude;
+animation: spin-beam 2s linear infinite;
+opacity: 0;
+transition: opacity 0.3s;
+}
+.border-beam-btn:hover::before {
+opacity: 1;
+}
+@keyframes spin-beam {
+from {
+transform: rotate(0deg);
+}
+to {
+transform: rotate(360deg);
+}
+}
+/* 4. Text Clip Slide Down */
+.char-reveal span {
+display: inline-block;
+opacity: 0;
+transform: translateY(-100%);
+clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+animation: text-slide-down 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes text-slide-down {
+to {
+opacity: 1;
+transform: translateY(0);
+clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+}
+/* Flashlight Effect */
+.flashlight-card {
+position: relative;
+overflow: hidden;
+}
+.flashlight-card::after {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.06), transparent 40%);
+opacity: 0;
+transition: opacity 0.5s;
+pointer-events: none;
+z-index: 2;
+}
+.flashlight-card:hover::after {
+opacity: 1;
+}
+/* Grid Background */
+.grid-bg {
+background-size: 40px 40px;
+background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+/* Portfolio Card Hover Effect */
+.portfolio-card {
+transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.portfolio-card:hover {
+transform: translateY(-12px);
+border-color: rgba(255, 255, 255, 0.2);
+}
+.portfolio-card:hover .portfolio-image {
+transform: scale(1.05);
+}
+.portfolio-image {
+transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* Category Filter Pills */
+.filter-pill {
+transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.filter-pill:hover {
+transform: translateY(-2px);
+}
+.filter-pill.active {
+background: rgba(255, 255, 255, 0.1);
+border-color: rgba(255, 255, 255, 0.3);
+}
+/* WhatsApp Floating Button */
+.whatsapp-button {
+position: fixed;
+bottom: 2rem;
+right: 2rem;
+z-index: 1000;
+width: 60px;
+height: 60px;
+border-radius: 50%;
+background: rgba(16, 185, 129, 0.1);
+border: 1px solid rgba(16, 185, 129, 0.2);
+backdrop-filter: blur(12px);
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+.whatsapp-button:hover {
+transform: scale(1.1);
+background: rgba(16, 185, 129, 0.15);
+border-color: rgba(16, 185, 129, 0.3);
+box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+}
+.whatsapp-button svg {
+width: 28px;
+height: 28px;
+color: rgb(16, 185, 129);
+}
+@media (max-width: 768px) {
+.whatsapp-button {
+bottom: 1.5rem;
+right: 1.5rem;
+width: 56px;
+height: 56px;
+}
+.whatsapp-button svg {
+width: 26px;
+height: 26px;
+}
+}
+</style></head>
+
+<body class="antialiased selection:bg-white/20 selection:text-white">
+
+    <!-- Background Columns (Fixed) -->
+    <div class="fixed inset-0 z-0 flex justify-between pointer-events-none opacity-20">
+        <div class="w-full h-full border-r border-zinc-800 bg-column" style="animation-delay: 0.1s"></div>
+        <div class="w-full h-full border-r border-zinc-800 bg-column" style="animation-delay: 0.2s"></div>
+        <div class="w-full h-full border-r border-zinc-800 bg-column" style="animation-delay: 0.3s"></div>
+        <div class="w-full h-full border-r border-zinc-800 bg-column" style="animation-delay: 0.4s"></div>
+        <div class="w-full h-full border-r border-zinc-800 bg-column" style="animation-delay: 0.5s"></div>
+        <div class="w-full h-full border-r border-zinc-800 bg-column" style="animation-delay: 0.6s"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="flex items-center">
+                    <img src="1.png" alt="AGB Logo" class="h-8 w-auto" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
+                </a>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html#inicio" class="text-xs text-zinc-400 hover:text-white transition-colors font-geist-mono">Início</a>
+                <a href="agb.html" class="text-xs text-zinc-400 hover:text-white transition-colors font-geist-mono">AGB</a>
+                <a href="servicos.html" class="text-xs text-zinc-400 hover:text-white transition-colors font-geist-mono">Serviços</a>
+                <a href="portfolio.html" class="text-xs text-white transition-colors font-geist-mono">Portfólio</a>
+                <a href="faqs.html" class="text-xs text-zinc-400 hover:text-white transition-colors font-geist-mono">FAQs</a>
+                <a href="index.html#contact" class="text-xs text-zinc-400 hover:text-white transition-colors font-geist-mono">Contacto</a>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-xs text-white font-geist-mono">PT</span>
+                <span class="text-xs text-zinc-500">|</span>
+                <span class="text-xs text-zinc-400 hover:text-white transition-colors cursor-pointer font-geist-mono">EN</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="z-10 pt-32 pb-20 relative">
+
+        <!-- ================= PORTFOLIO HERO ================= -->
+        <section class="max-w-6xl mx-auto px-6 mb-24">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl md:text-7xl font-medium tracking-tight text-white mb-6 leading-[1.1] char-reveal">
+                    <span style="animation-delay: 0.1s;" class="tracking-tight font-geist-mono font-semibold">O Nosso</span>
+                    <br class="hidden md:block">
+                    <span class="text-zinc-500 tracking-tight font-geist-mono font-semibold" style="animation-delay: 0.2s;">Portfólio</span>
+                </h1>
+
+                <p class="text-lg text-zinc-400 mb-8 max-w-xl leading-relaxed reveal-on-scroll font-geist-mono">
+                    Projetos que transformaram desafios em oportunidades. Conheça algumas das empresas que confiaram na AGB para impulsionar o seu crescimento digital.
+                </p>
+            </div>
+        </section>
+
+        <!-- ================= FILTER CATEGORIES ================= -->
+        <section class="max-w-6xl mx-auto px-6 mb-16 reveal-on-scroll">
+            <div class="flex flex-wrap gap-3 justify-center">
+                <button class="filter-pill active border border-white/10 bg-zinc-900/40 px-6 py-2 rounded-full text-sm font-geist-mono text-zinc-300 hover:text-white">
+                    Todos
+                </button>
+                <button class="filter-pill border border-white/10 bg-zinc-900/40 px-6 py-2 rounded-full text-sm font-geist-mono text-zinc-400 hover:text-white">
+                    E-commerce
+                </button>
+                <button class="filter-pill border border-white/10 bg-zinc-900/40 px-6 py-2 rounded-full text-sm font-geist-mono text-zinc-400 hover:text-white">
+                    Gestão Empresarial
+                </button>
+                <button class="filter-pill border border-white/10 bg-zinc-900/40 px-6 py-2 rounded-full text-sm font-geist-mono text-zinc-400 hover:text-white">
+                    Automação
+                </button>
+                <button class="filter-pill border border-white/10 bg-zinc-900/40 px-6 py-2 rounded-full text-sm font-geist-mono text-zinc-400 hover:text-white">
+                    Cloud & DevOps
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= PORTFOLIO GRID ================= -->
+        <section class="max-w-6xl mx-auto px-6 mb-32">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <!-- Project 1: E-commerce Platform -->
+                <div class="flashlight-card portfolio-card rounded-xl border border-white/10 bg-zinc-900/40 overflow-hidden reveal-on-scroll">
+                    <!-- Project Image Placeholder -->
+                    <div class="portfolio-image relative h-64 bg-gradient-to-br from-emerald-500/20 via-zinc-900 to-zinc-900 overflow-hidden">
+                        <div class="absolute inset-0 grid-bg opacity-30"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <i data-lucide="shopping-cart" class="w-16 h-16 text-emerald-400 mb-4 mx-auto"></i>
+                                <div class="text-2xl font-bold text-white font-geist-mono">E-commerce</div>
+                            </div>
+                        </div>
+                        <!-- Category Badge -->
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 px-3 py-1 rounded-full text-xs font-geist-mono">E-commerce</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Details -->
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2 font-geist-mono">Plataforma E-commerce Premium</h3>
+                        <p class="text-sm text-zinc-400 mb-4 font-geist-mono leading-relaxed">
+                            Loja online completa para marca de moda sustentável, com integração de pagamentos, gestão de stock em tempo real e sistema de recomendações personalizado.
+                        </p>
+
+                        <!-- Tags -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">React</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Node.js</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">PostgreSQL</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Stripe</span>
+                        </div>
+
+                        <!-- Results -->
+                        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/5">
+                            <div>
+                                <div class="text-lg font-bold text-emerald-400 font-geist-mono">+250%</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Vendas online</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-blue-400 font-geist-mono">15k</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Users ativos</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-purple-400 font-geist-mono">99.9%</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Uptime</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: ERP System -->
+                <div class="flashlight-card portfolio-card rounded-xl border border-white/10 bg-zinc-900/40 overflow-hidden reveal-on-scroll" style="transition-delay: 0.1s;">
+                    <div class="portfolio-image relative h-64 bg-gradient-to-br from-blue-500/20 via-zinc-900 to-zinc-900 overflow-hidden">
+                        <div class="absolute inset-0 grid-bg opacity-30"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <i data-lucide="building-2" class="w-16 h-16 text-blue-400 mb-4 mx-auto"></i>
+                                <div class="text-2xl font-bold text-white font-geist-mono">ERP</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-blue-500/20 border border-blue-500/30 text-blue-300 px-3 py-1 rounded-full text-xs font-geist-mono">Gestão Empresarial</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2 font-geist-mono">Sistema ERP Personalizado</h3>
+                        <p class="text-sm text-zinc-400 mb-4 font-geist-mono leading-relaxed">
+                            Sistema de gestão integrado para empresa de distribuição, unificando vendas, logística, faturação e BI num único ecossistema digital.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Angular</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">.NET Core</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">SQL Server</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Azure</span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/5">
+                            <div>
+                                <div class="text-lg font-bold text-emerald-400 font-geist-mono">-65%</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Tempo proc.</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-blue-400 font-geist-mono">100+</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Users diários</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-purple-400 font-geist-mono">24/7</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Disponível</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Process Automation -->
+                <div class="flashlight-card portfolio-card rounded-xl border border-white/10 bg-zinc-900/40 overflow-hidden reveal-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="portfolio-image relative h-64 bg-gradient-to-br from-purple-500/20 via-zinc-900 to-zinc-900 overflow-hidden">
+                        <div class="absolute inset-0 grid-bg opacity-30"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <i data-lucide="zap" class="w-16 h-16 text-purple-400 mb-4 mx-auto"></i>
+                                <div class="text-2xl font-bold text-white font-geist-mono">Automação</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-purple-500/20 border border-purple-500/30 text-purple-300 px-3 py-1 rounded-full text-xs font-geist-mono">Automação</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2 font-geist-mono">Automação de Processos RH</h3>
+                        <p class="text-sm text-zinc-400 mb-4 font-geist-mono leading-relaxed">
+                            Plataforma de RPA para automatizar recrutamento, onboarding e gestão de férias, eliminando tarefas manuais e reduzindo erros administrativos.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Python</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">FastAPI</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">MongoDB</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Celery</span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/5">
+                            <div>
+                                <div class="text-lg font-bold text-emerald-400 font-geist-mono">-80%</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Tempo admin</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-blue-400 font-geist-mono">500+</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Processos/mês</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-purple-400 font-geist-mono">95%</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Precisão</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Mobile App -->
+                <div class="flashlight-card portfolio-card rounded-xl border border-white/10 bg-zinc-900/40 overflow-hidden reveal-on-scroll" style="transition-delay: 0.3s;">
+                    <div class="portfolio-image relative h-64 bg-gradient-to-br from-cyan-500/20 via-zinc-900 to-zinc-900 overflow-hidden">
+                        <div class="absolute inset-0 grid-bg opacity-30"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <i data-lucide="smartphone" class="w-16 h-16 text-cyan-400 mb-4 mx-auto"></i>
+                                <div class="text-2xl font-bold text-white font-geist-mono">Mobile App</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 px-3 py-1 rounded-full text-xs font-geist-mono">Mobile</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2 font-geist-mono">App de Reservas e Gestão</h3>
+                        <p class="text-sm text-zinc-400 mb-4 font-geist-mono leading-relaxed">
+                            Aplicação mobile para cadeia de restaurantes, permitindo reservas online, programas de fidelização e pagamentos contactless integrados.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">React Native</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Firebase</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">GraphQL</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Stripe</span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/5">
+                            <div>
+                                <div class="text-lg font-bold text-emerald-400 font-geist-mono">30k+</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Downloads</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-blue-400 font-geist-mono">4.8★</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Rating</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-purple-400 font-geist-mono">12k</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Users ativos</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Cloud Migration -->
+                <div class="flashlight-card portfolio-card rounded-xl border border-white/10 bg-zinc-900/40 overflow-hidden reveal-on-scroll" style="transition-delay: 0.4s;">
+                    <div class="portfolio-image relative h-64 bg-gradient-to-br from-orange-500/20 via-zinc-900 to-zinc-900 overflow-hidden">
+                        <div class="absolute inset-0 grid-bg opacity-30"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <i data-lucide="cloud-upload" class="w-16 h-16 text-orange-400 mb-4 mx-auto"></i>
+                                <div class="text-2xl font-bold text-white font-geist-mono">Cloud</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-orange-500/20 border border-orange-500/30 text-orange-300 px-3 py-1 rounded-full text-xs font-geist-mono">Cloud & DevOps</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2 font-geist-mono">Migração para AWS Cloud</h3>
+                        <p class="text-sm text-zinc-400 mb-4 font-geist-mono leading-relaxed">
+                            Migração completa de infraestrutura on-premise para AWS, implementando arquitetura serverless, CI/CD automatizado e monitorização 24/7.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">AWS</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Docker</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Kubernetes</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Terraform</span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/5">
+                            <div>
+                                <div class="text-lg font-bold text-emerald-400 font-geist-mono">-40%</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Custos infra</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-blue-400 font-geist-mono">99.99%</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Uptime</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-purple-400 font-geist-mono">5x</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Deploy speed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Analytics Dashboard -->
+                <div class="flashlight-card portfolio-card rounded-xl border border-white/10 bg-zinc-900/40 overflow-hidden reveal-on-scroll" style="transition-delay: 0.5s;">
+                    <div class="portfolio-image relative h-64 bg-gradient-to-br from-pink-500/20 via-zinc-900 to-zinc-900 overflow-hidden">
+                        <div class="absolute inset-0 grid-bg opacity-30"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <i data-lucide="bar-chart-3" class="w-16 h-16 text-pink-400 mb-4 mx-auto"></i>
+                                <div class="text-2xl font-bold text-white font-geist-mono">Analytics</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-pink-500/20 border border-pink-500/30 text-pink-300 px-3 py-1 rounded-full text-xs font-geist-mono">Business Intelligence</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2 font-geist-mono">Dashboard BI em Tempo Real</h3>
+                        <p class="text-sm text-zinc-400 mb-4 font-geist-mono leading-relaxed">
+                            Plataforma de Business Intelligence para grupo hoteleiro, agregando dados de múltiplas fontes com visualizações interativas e análise preditiva.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Vue.js</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Python</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">PowerBI</span>
+                            <span class="bg-zinc-800 text-zinc-400 px-2 py-1 rounded text-xs font-geist-mono">Snowflake</span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/5">
+                            <div>
+                                <div class="text-lg font-bold text-emerald-400 font-geist-mono">15+</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Fontes dados</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-blue-400 font-geist-mono">Real-time</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">Atualização</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-purple-400 font-geist-mono">50+</div>
+                                <div class="text-xs text-zinc-500 font-geist-mono">KPIs</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= TESTIMONIALS ================= -->
+        <section class="max-w-6xl mx-auto px-6 mb-32 reveal-on-scroll">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-medium text-white mb-4 font-geist-mono">O Que Dizem os Nossos Clientes</h2>
+                <p class="text-zinc-400 max-w-2xl mx-auto font-geist-mono">
+                    Testemunhos reais de empresas que transformaram os seus negócios com a AGB.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Testimonial 1 -->
+                <div class="rounded-xl border border-white/10 bg-zinc-900/40 p-6 backdrop-blur-sm">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                    </div>
+                    <p class="text-sm text-zinc-400 mb-4 font-geist-mono italic">
+                        "A AGB transformou completamente a nossa operação. O sistema ERP que desenvolveram aumentou a nossa eficiência em 65% e pagou-se em menos de um ano."
+                    </p>
+                    <div class="pt-4 border-t border-white/5">
+                        <div class="font-medium text-white text-sm font-geist-mono">Miguel Ferreira</div>
+                        <div class="text-xs text-zinc-500 font-geist-mono">CEO, Distribuidora Nacional</div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="rounded-xl border border-white/10 bg-zinc-900/40 p-6 backdrop-blur-sm">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                    </div>
+                    <p class="text-sm text-zinc-400 mb-4 font-geist-mono italic">
+                        "Profissionalismo e dedicação excepcionais. A plataforma e-commerce que criaram superou todas as nossas expectativas e as vendas online triplicaram."
+                    </p>
+                    <div class="pt-4 border-t border-white/5">
+                        <div class="font-medium text-white text-sm font-geist-mono">Sofia Costa</div>
+                        <div class="text-xs text-zinc-500 font-geist-mono">Founder, EcoFashion</div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="rounded-xl border border-white/10 bg-zinc-900/40 p-6 backdrop-blur-sm">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                    </div>
+                    <p class="text-sm text-zinc-400 mb-4 font-geist-mono italic">
+                        "A migração para cloud foi impecável. Zero downtime, custos reduzidos em 40% e agora temos a escalabilidade que precisávamos para crescer."
+                    </p>
+                    <div class="pt-4 border-t border-white/5">
+                        <div class="font-medium text-white text-sm font-geist-mono">Ricardo Santos</div>
+                        <div class="text-xs text-zinc-500 font-geist-mono">CTO, TechCorp</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CTA SECTION ================= -->
+        <section class="max-w-6xl mx-auto px-6 mb-32 reveal-on-scroll">
+            <div class="rounded-2xl border border-white/10 bg-zinc-900/30 p-8 md:p-12 overflow-hidden relative">
+                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl"></div>
+
+                <div class="relative z-10 text-center max-w-2xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-medium text-white mb-4 font-geist-mono">Quer Ver o Seu Projeto Aqui?</h2>
+                    <p class="text-zinc-400 mb-8 font-geist-mono">
+                        Vamos transformar a sua visão em realidade. Entre em contacto e descubra como podemos ajudar o seu negócio a crescer.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="index.html#contact" class="border-beam-btn relative group bg-zinc-900 text-white px-6 py-3 rounded-full text-sm font-medium border border-zinc-800">
+                            <span class="relative z-10 flex items-center justify-center gap-2 font-geist-mono">
+                                Iniciar Projeto
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-zinc-500 group-hover:text-yellow-200 transition-colors"></i>
+                            </span>
+                        </a>
+                        <a href="servicos.html" class="text-zinc-400 hover:text-white px-6 py-3 text-sm font-medium font-geist-mono transition-colors border border-white/10 rounded-full hover:border-white/20">
+                            Ver Serviços
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= FOOTER ================= -->
+        <footer class="border-t border-white/5 bg-black/30 backdrop-blur-sm mt-24">
+            <div class="max-w-6xl mx-auto px-6 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                    <div class="md:col-span-2">
+                        <h3 class="text-white font-medium mb-4 font-geist-mono">AGB - Soluções de Software</h3>
+                        <p class="text-sm text-zinc-500 leading-relaxed font-geist-mono">
+                            Desenvolvemos software à medida para empresas que procuram transformação digital, eficiência operacional e crescimento sustentável.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-white font-medium mb-4 font-geist-mono text-sm">Informação Legal</h3>
+                        <ul class="space-y-2 text-sm text-zinc-500 font-geist-mono">
+                            <li><a href="/politica-privacidade" class="hover:text-white transition-colors">Política de Privacidade</a></li>
+                            <li><a href="/termos-condicoes" class="hover:text-white transition-colors">Termos e Condições</a></li>
+                            <li><a href="/rgpd" class="hover:text-white transition-colors">Conformidade RGPD</a></li>
+                            <li><a href="/politica-cookies" class="hover:text-white transition-colors">Política de Cookies</a></li>
+                            <li><a href="/livro-reclamacoes" class="hover:text-white transition-colors">Livro de Reclamações</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-white font-medium mb-4 font-geist-mono text-sm">Links Rápidos</h3>
+                        <ul class="space-y-2 text-sm text-zinc-500 font-geist-mono">
+                            <li><a href="index.html#inicio" class="hover:text-white transition-colors">Início</a></li>
+                            <li><a href="index.html#agb" class="hover:text-white transition-colors">Sobre a AGB</a></li>
+                            <li><a href="servicos.html" class="hover:text-white transition-colors">Serviços</a></li>
+                            <li><a href="portfolio.html" class="hover:text-white transition-colors">Portfólio</a></li>
+                            <li><a href="index.html#contact" class="hover:text-white transition-colors">Contacto</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-t border-white/5 pt-8">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="text-xs text-zinc-600 font-geist-mono">
+                            <p>© 2025 AGB - Soluções de Software, Lda. Todos os direitos reservados.</p>
+                        </div>
+
+                        <div class="flex gap-3 items-center flex-wrap">
+                            <div class="flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-md text-zinc-500 hover:text-white transition-colors">
+                                <i data-lucide="shield-check" class="w-3 h-3 text-emerald-500"></i>
+                                <span class="text-xs font-geist-mono">RGPD</span>
+                            </div>
+                            <div class="flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-md text-zinc-500 hover:text-white transition-colors">
+                                <i data-lucide="file-text" class="w-3 h-3 text-blue-500"></i>
+                                <span class="text-xs font-geist-mono">ISO 27001</span>
+                            </div>
+                            <div class="flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-md text-zinc-500 hover:text-white transition-colors">
+                                <i data-lucide="lock" class="w-3 h-3 text-purple-500"></i>
+                                <span class="text-xs font-geist-mono">SSL Seguro</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        // Flashlight Effect Script
+        const cards = document.querySelectorAll('.flashlight-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Intersection Observer for "Animate on View"
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach((element) => {
+            observer.observe(element);
+        });
+
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-pill');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+    </script>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/351XXXXXXXXX" target="_blank" rel="noopener noreferrer" class="whatsapp-button" aria-label="Contact via WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+    </a>
+
+</body></html>
